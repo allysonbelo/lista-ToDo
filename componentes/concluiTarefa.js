@@ -1,15 +1,21 @@
-const BotaoConclui = () => {
-    const botaoConclui = document.createElement('button')       //cria um elemento(botão) e armazena em variavel
-    botaoConclui.classList.add('check-button')                  //adiciona classe
-    botaoConclui.innerText = 'concluir'                         //adiciona texto
-    botaoConclui.addEventListener('click', concluirTarefa)      //monitora ação de click
-    return botaoConclui                                         //retorna o componente
+const concluirTarefa = (atualiza, id) => {
+    const tarefaCadastradas = JSON.parse(localStorage.getItem('tarefas'))
+
+    tarefaCadastradas[id].concluida = !tarefaCadastradas[id].concluida
+    localStorage.setItem('tarefas', JSON.stringify(tarefaCadastradas))
+
+    atualiza()
 }
 
-const concluirTarefa = (evento) => {
-    const botaoConclui = evento.target                          //verifica quem sofreu a ação
-    const tarefaCompleta = botaoConclui.parentElement           //pega o elemento paai de quem sofreu a ação
-    tarefaCompleta.classList.toggle('done')                     //adiciona ou remove a classe 'done' ao elemento
+const BotaoConclui = (atualiza, id) => {
+    const botaoConclui = document.createElement('button')           //cria um elemento(botão) e armazena em variavel
+    botaoConclui.classList.add('check-button')                      //adiciona classe
+    botaoConclui.innerText = 'concluir'                             //adiciona texto
+    botaoConclui.addEventListener('click', () =>                    //monitora ação de click
+        concluirTarefa(atualiza, id))                           
+        
+        return botaoConclui                                         //retorna o componente
 }
 
-export default BotaoConclui                                     //exporta para ser importado em outra parte do projeto
+
+export default BotaoConclui //exporta para ser importado em outra parte do projeto
